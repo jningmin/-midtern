@@ -1,56 +1,27 @@
-let player;//YouTubePlayer
-let currentPlay=0;//記錄目前撥到第幾首歌
-
-//YouTubeAPIReady
-function onYouTubeIframeAPIReady(){
-    player=new YT.Player("player",{
-        height:"390",
-        width:"640",
-        videoId:playList[currentPlay],
-        playerVars:{
-            autoplay:0,//是否自動撥放
-            controls:0,//是否顯示控制項
-            start:playTime[currentPlay][0],//開始秒數
-            end:playTime[currentPlay][1],//結束秒數
-            iv_load_policy:3
-        },
-        events:{
-            onReady:onPlayerReady,
-            onStateChange:onPlayerStateChange
-        }
+//window.onload=function(){
+    //document.write("HelloJavaScript");
+//};
+$(function(){
+    $("input").on("click",function(){
+        //alert("Hi");
+        $("h1").text($("li:first").text());
     });
-}
+});
 
-//YouTubePlayerReady
-function onPlayerReady(event){
-    $("#playButton").on("click",function(){
-        $("h2").text(player.getVideoData().title);
-        player.playVideo();
+$(function(){
+    $("input").on("click",function(){
+        //alert("Hi");
+        $("h1").text($("li:last").text());
     });
-}
+});
 
-//PlayerStateChange
-function onPlayerStateChange(event){
-    if(Math.floor(player.getCurrentTime())==playTime[currentPlay][1]){
-        if(currentPlay<playList.length-1){
-            currentPlay++;
-            player.loadVideoById({
-                videoId:playList[currentPlay],
-                startSeconds:playTime[currentPlay][0],
-                endSeconds:playTime[currentPlay][1],
-                suggestedQuality:"large"
-            });
-        }
-        else{
-            currentPlay=0;
-            player.cueVideoById({videoId:playList[currentPlay],
-                startSeconds:playTime[currentPlay][0],
-                endSeconds:playTime[currentPlay][1],
-                suggestedQuality:"large"
-            });
-        } 
-    }
-    if(event.data==1){
-        $("h2").text(player.getVideoData().title);
-    }
-}
+$(function(){
+    $("input").on("click",function(){
+        //alert("Hi");
+        var numberOfListItem=$("li").length;
+        var randomChildNumber=Math.floor(Math.random()*numberOfListItem);
+        var randomText = $("li").eq(randomChildNumber).find("span").text();
+        var randomImage = $("li").eq(randomChildNumber).find("img").clone();
+        $("h1").html(randomImage).append(randomText);
+    });
+});
